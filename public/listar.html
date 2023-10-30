@@ -4,10 +4,55 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Listar Alumnos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+      color: #333;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      margin: 20px auto;
+      background-color: #fff;
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #c8d9ea;
+    }
+  </style>
 </head>
 <body>
   <h1>Listar Alumnos</h1>
-  <table border="1">
+  <table>
     <thead>
       <tr>
         <th>ID</th>
@@ -16,22 +61,27 @@
         <th>Edad</th>
       </tr>
     </thead>
-    <tbody id="listaAlumnos">
+    <tbody id="tablaAlumnos">
+      <!-- Aquí se cargarán los alumnos desde JavaScript -->
     </tbody>
   </table>
 
   <script>
+    // Obtener y mostrar los alumnos desde el servidor
     fetch('/alumnos')
       .then(response => response.json())
       .then(alumnos => {
-        const listaAlumnos = document.getElementById('listaAlumnos');
+        const tablaAlumnos = document.getElementById('tablaAlumnos');
+
         alumnos.forEach(alumno => {
           const row = document.createElement('tr');
-          row.innerHTML = `<td>${alumno.id}</td>
-                           <td>${alumno.nombre}</td>
-                           <td>${alumno.apellido}</td>
-                           <td>${alumno.edad}</td>`;
-          listaAlumnos.appendChild(row);
+          row.innerHTML = `
+            <td>${alumno.id}</td>
+            <td>${alumno.nombre}</td>
+            <td>${alumno.apellido}</td>
+            <td>${alumno.edad}</td>
+          `;
+          tablaAlumnos.appendChild(row);
         });
       })
       .catch(error => console.error('Error al obtener alumnos:', error));
